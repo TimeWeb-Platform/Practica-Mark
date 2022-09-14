@@ -2,7 +2,7 @@
 
 namespace Usuarios.Domain
 {
-    public class User
+    public class OUsuario
     {
         public int UsuarioID            { get; set; }
         public string Nombre            { get; set; }
