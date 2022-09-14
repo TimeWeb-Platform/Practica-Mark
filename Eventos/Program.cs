@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ContextEvento>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
 //AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
 
 //IUsuario
 builder.Services.AddTransient<IEvento, SEvento>();

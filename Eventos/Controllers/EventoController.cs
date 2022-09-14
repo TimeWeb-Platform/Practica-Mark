@@ -43,11 +43,17 @@ namespace Eventos.Controllers
             var action = await _evento.Post(pDTOU);
             var result = action.Value;
 
-            if (result > 0) { return Ok(); }
-            //////////////////////////////////////////
-            return BadRequest("no fue posible hacer la accion");
+            switch(result){
+                case 1:
+                    return Ok();
+                case 0:     
+                    return BadRequest("no fue posible registrar el evento");
+                default:    
+                    return BadRequest("no fue posible hacer la accion");
+            }
         }
         #endregion
+
 
 ////////////////////////////////////////////////////////////////////////
     }
