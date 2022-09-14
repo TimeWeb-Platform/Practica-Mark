@@ -1,47 +1,91 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Usuarios.Domain;
+using Usuarios.DTO;
 using Usuarios.Usuario.Interface;
+using Usuarios.Usuario.Repositorie;
 
 namespace Usuarios.Usuario.Service
 {
     public class SUsuario : IUsuario
     {
+        private readonly RUsuario _rusuario;
+        private readonly IMapper  _mapper;
+
+        public SUsuario( RUsuario rusuario, IMapper mapper)
+        {
+            this._rusuario = rusuario;
+            this._mapper   = mapper;
+        }
+
         #region GET
-        public Task<ActionResult<List<OUsuario>>> GetAll()
+        public async Task<ActionResult<List<DTOUsuario>>> GetAll()
         {
-            throw new NotImplementedException();
+            var users  = await _rusuario.GetAll();
+            var result = _mapper.Map<List<DTOUsuario>>(users);
+            return result;
         }
 
-        public Task<ActionResult<OUsuario>> GetID()
+        public async Task<ActionResult<DTOUsuario>> GetID(int pID)
         {
-            throw new NotImplementedException();
+            var users = await _rusuario.GetID(pID);
+            var result = _mapper.Map<DTOUsuario>(users);
+            return result;
         }
-
+        
         #endregion
 
         #region POST
-        public Task<ActionResult> Post()
+        public async Task<ActionResult<int>> Post(DTOUsuarioC pDTOU)
         {
-            throw new NotImplementedException();
+            var users  = _mapper.Map<OUsuario>(pDTOU); 
+            var action = _rusuario.Post(users);
+            var result = await action;
+
+            if (result > 0) { return 1; }
+            //////////////
+            return 0;
         }
         #endregion
 
         #region PUT
-        public Task<ActionResult> Put()
+        public async Task<ActionResult<int>> Put(DTOUsuarioP pDTOU, int pID)
         {
-            throw new NotImplementedException();
+            var exist = _rusuario.GetID(pID);
+            if (exist == null) { return 0; }
+            /////////////////////////////////////
+
+            var users    = await exist;
+                users    = _mapper.Map(pDTOU,users);
+
+            var action = _rusuario.Put(users);
+            var result = await action;
+
+            if (result > 0) { return 1; }
+            //////////////
+            return 0;
         }
 
         #endregion
 
         #region DELETE  
-        public Task<ActionResult> Delete()
+        public async Task<ActionResult<int>> Delete(int pID)
         {
-            throw new NotImplementedException();
+            var exist = _rusuario.GetID(pID);
+            if (exist == null) { return 0; }
+            /////////////////////////////////////
+
+            var users  = await exist;
+            var action = _rusuario.Delete(users);
+            var result = await action;
+
+            if (result > 0) { return 1; }
+            //////////////
+            return 0;
         }
 
         #endregion
 
-//////////////////////////    
+        //////////////////////////    
     }
 }

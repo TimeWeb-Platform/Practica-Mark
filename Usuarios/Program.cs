@@ -2,6 +2,7 @@ using Usuarios.Context;
 using Microsoft.EntityFrameworkCore;
 using Usuarios.Usuario.Interface;
 using Usuarios.Usuario.Service;
+using Usuarios.Usuario.Repositorie;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 //IUsuario
 builder.Services.AddTransient<IUsuario,SUsuario>();
+builder.Services.AddTransient<RUsuario>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

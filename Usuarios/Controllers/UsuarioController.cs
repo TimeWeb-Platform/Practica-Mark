@@ -1,23 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Usuarios.Context;
+using Usuarios.Domain;
+using Usuarios.DTO;
+using Usuarios.Usuario.Interface;
 
 namespace Usuarios.Controllers
 {
     [ApiController]
-    [Route("api/actor")]
+    [Route("api/usuario")]
     public class UsuarioController : ControllerBase
     {
+        private readonly IUsuario _usuario;
+
+        public UsuarioController( IUsuario usuario)
+        {
+            this._usuario = usuario;
+        }
+
         //// GET ////
         #region GET
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult<List<DTOUsuario>>> GetAll()
         {
-            return NoContent();
+           var result = await _usuario.GetAll();
+           return Ok(result);
         }
 
-        [HttpGet("{id:int}", Name = "GetActor")]
-        public async Task<ActionResult> Get(int id)
+        [HttpGet("{id:int}", Name = "GetUsuario")]
+        public async Task<ActionResult<DTOUsuario>> GetID(int id)
         {
-            return NoContent();
+            var result = await _usuario.GetID(id);
+            return result;
         }
 
         #endregion
@@ -25,9 +39,14 @@ namespace Usuarios.Controllers
         //// POST ////
         #region POST
         [HttpPost]
-        public async Task<ActionResult> Post()
+        public async Task<ActionResult> Post([FromBody] DTOUsuarioC pDTOU)
         {
-            return NoContent();
+            var action = await _usuario.Post(pDTOU);
+            var result = action.Value;
+
+            if (result > 0) { return Ok(); }
+            //////////////////////////////////////////
+            return BadRequest("no fue posible hacer la accion");
         }
 
         #endregion
@@ -35,9 +54,14 @@ namespace Usuarios.Controllers
         ///// PUT ////
         #region PUT
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put( int id)
+        public async Task<ActionResult> Put([FromBody] DTOUsuarioP pDTOU ,int id)
         {
-            return NoContent();
+            var action = await _usuario.Put(pDTOU,id);
+            var result = action.Value;
+
+            if (result > 0) { return Ok(); }
+            //////////////////////////////////////////
+            return BadRequest("no fue posible hacer la accion");
         }
 
         #endregion
@@ -47,7 +71,12 @@ namespace Usuarios.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            return NoContent();
+            var action = await _usuario.Delete(id);
+            var result = action.Value;
+
+            if (result > 0) { return Ok(); }
+            //////////////////////////////////////////
+            return BadRequest("no fue posible hacer la accion");
         }
 
         #endregion
