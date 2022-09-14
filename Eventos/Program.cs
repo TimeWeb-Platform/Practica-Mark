@@ -1,8 +1,24 @@
+using Eventos.Context;
+using Eventos.Evento.Interface;
+using Eventos.Evento.Repostorie;
+using Eventos.Evento.Service;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+///////////////////////////////////////////////////////////////////////////////////////////
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ContextEvento>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
+//IUsuario
+builder.Services.AddTransient<IEvento, SEvento>();
+builder.Services.AddTransient<REvento>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
