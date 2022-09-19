@@ -25,6 +25,13 @@ namespace Eventos.Evento.Service
             return result;
         }
 
+        public async Task<ActionResult<List<DTOEvento>>> GETDates(int pID, DateTime pDateS, DateTime pDateF)
+        {
+            var eventos = await _evento.GetDates(pID, pDateS, pDateF);
+            var result  = _mapper.Map<List<DTOEvento>>(eventos);
+            return result;
+        }
+
         public async Task<ActionResult<DTOEvento>> GetID(int pID)
         {
             var eventos = await _evento.GetID(pID);

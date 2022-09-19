@@ -8,6 +8,7 @@ namespace Eventos.Evento.Interface
         Task<ActionResult<List<DTOEvento>>> GetAll();
         Task<ActionResult<DTOEvento>> GetID(int pID);
         Task<ActionResult<int>> Post(DTOEventoC pDTOU);
+        Task<ActionResult<List<DTOEvento>>>GETDates(int pID,DateTime pDateS, DateTime pDateF);
         
     }
 }

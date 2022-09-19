@@ -23,6 +23,11 @@ namespace Eventos.Evento.Repostorie
             var result = await _context.TEvento.FirstOrDefaultAsync(x => x.ID == pID);
             return result;
         }
+        public async Task<List<OEvento>> GetDates(int pID,DateTime pdateS, DateTime pDateF)
+        {
+            var result = await _context.TEvento.Where(x => x.UsuarioID == pID && x.FechaAlta >= pdateS && x.FechaAlta <= pDateF). ToListAsync();
+            return result;
+        }
 
         public async Task<int> Post(OEvento pEvento)
         {

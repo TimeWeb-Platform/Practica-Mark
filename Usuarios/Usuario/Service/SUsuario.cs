@@ -28,7 +28,7 @@ namespace Usuarios.Usuario.Service
 
         public async Task<ActionResult<DTOUsuario>> GetID(int pID)
         {
-            var users = await _rusuario.GetID(pID);
+            var users  = await _rusuario.GetID(pID);
             var result = _mapper.Map<DTOUsuario>(users);
             return result;
         }

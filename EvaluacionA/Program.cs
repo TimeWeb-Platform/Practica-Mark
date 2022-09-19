@@ -1,8 +1,9 @@
-using Evaluacion.Evaluacion.Interface;
-using Evaluacion.Evaluacion.Service;
-using Eventos.Evento.Interface;
-using Eventos.Evento.Repostorie;
-using Eventos.Evento.Service;
+using EvaluacionA.Evaluacion.Interface;
+using EvaluacionA.Evaluacion.Service;
+using Eventos.Controllers;
+using Microsoft.EntityFrameworkCore;
+using Usuarios.Context;
+using Usuarios.Controllers;
 using Usuarios.Usuario.Interface;
 using Usuarios.Usuario.Repositorie;
 using Usuarios.Usuario.Service;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddTransient<UsuarioController, UsuarioController>();
 builder.Services.AddTransient<IEvaluacion, SEvaluacion>();
 
 
@@ -36,3 +38,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

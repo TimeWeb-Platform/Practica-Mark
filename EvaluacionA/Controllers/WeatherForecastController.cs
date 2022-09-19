@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Evaluacion.Controllers
+namespace EvaluacionA.Controllers
 {
     [ApiController]
     [Route("[controller]")]
