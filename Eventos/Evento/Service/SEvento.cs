@@ -4,6 +4,7 @@ using Eventos.DTO;
 using Eventos.Evento.Interface;
 using Eventos.Evento.Repostorie;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 
 namespace Eventos.Evento.Service
 {
@@ -22,7 +23,7 @@ namespace Eventos.Evento.Service
         public async Task<ActionResult<List<DTOEvento>>> GetAll()
         {
             var eventos = await _evento.GetAll();
-            var result = _mapper.Map<List<DTOEvento>>(eventos);
+            var result  = _mapper.Map<List<DTOEvento>>(eventos);
             return result;
         }
 
@@ -39,16 +40,27 @@ namespace Eventos.Evento.Service
         public async Task<ActionResult<DTOEvento>> GetID(int pID)
         {
             var eventos = await _evento.GetID(pID);
-            var result = _mapper.Map<DTOEvento>(eventos);
+            var result  = _mapper.Map<DTOEvento>(eventos);
             return result;
 
         }
         #endregion
         
         #region POST
-        public async Task<ActionResult<int>> Post(DTOEventoC pDTOE)
-        {
+        public async Task<ActionResult<int>> Post(DTOEventoC pDTOE){
+
             var eventos = _mapper.Map<OEvento>(pDTOE);
+
+            //// validar usuario Existe ////
+            var Uclient  = new RestClient().AddDefaultHeader(KnownHeaders.Accept, "");
+            var rusuario = new RestRequest("https://localhost:7167/api/usuario/" + eventos.UsuarioID, Method.Get);
+                rusuario.RequestFormat = DataFormat.Json;
+
+            var respuestaU  = Uclient.Execute(rusuario);
+            var userstring  = respuestaU.Content;
+            if (userstring == null || userstring.ToString() == "") { throw new Exception("usuario no encontrado"); }
+
+            // accion POST
             var action = _evento.Post(eventos);
             var result = await action;
 

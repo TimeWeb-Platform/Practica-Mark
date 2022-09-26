@@ -23,9 +23,9 @@ namespace Eventos.Evento.Repostorie
             var result = await _context.TEvento.FirstOrDefaultAsync(x => x.ID == pID);
             return result;
         }
-        public async Task<List<OEvento>> GetDates(int pID,DateTime pdateS, DateTime pDateF)
+        public async Task<List<OEvento>> GetDates(int pID,DateTime pDateS, DateTime pDateF)
         {
-            var result = await _context.TEvento.Where(x => x.UsuarioID == pID && x.FechaAlta >= pdateS && x.FechaAlta <= pDateF). ToListAsync();
+            var result = await _context.TEvento.Where(x => x.UsuarioID == pID && x.FechaAlta.Date >= pDateF.Date && x.FechaAlta.Date <= pDateS.Date).ToListAsync();
             return result;
         }
 

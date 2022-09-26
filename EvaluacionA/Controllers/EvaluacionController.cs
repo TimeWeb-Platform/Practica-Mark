@@ -1,5 +1,6 @@
 ﻿using EvaluacionA.Evaluacion.Interface;
 using EvaluacionA.Evaluacion.Service;
+using EvaluacionA.Objects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EvaluacionA.Controllers
@@ -15,12 +16,13 @@ namespace EvaluacionA.Controllers
             this.evaluacion = evaluacion;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<string>> a(){
-            var result = await evaluacion.asistencia(1,default(DateTime));
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<string>> evaluardias(DateTime date, int id){
+            var result = await evaluacion.asistencia(id,date);
             if (result.Value < 0){
-                return Unauthorized();
+                return Unauthorized("Accion no implementada");
             }
+
             var text = "dias de asistencia : " + result.Value.ToString();
             return text;
 

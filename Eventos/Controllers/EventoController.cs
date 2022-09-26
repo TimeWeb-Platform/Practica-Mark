@@ -20,7 +20,7 @@ namespace Eventos.Controllers
         //// GET ////
         #region GET
         [HttpGet("dates/{id:int}")]
-        public async Task<ActionResult<List<DTOEvento>>> todos(int id, [FromBody] DateTime date)
+        public async Task<ActionResult<List<DTOEvento>>> todos(int id, DateTime date)
         {
             var result = await _evento.GETDates(id,date);
             return result;
@@ -41,8 +41,6 @@ namespace Eventos.Controllers
         }
 
         
-
-
         #endregion
 
         //// POST ////
