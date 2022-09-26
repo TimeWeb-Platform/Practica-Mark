@@ -10,6 +10,7 @@ namespace Usuarios.MapperProfiles
         {
             CreateMap<OEvento, DTOEvento >().ReverseMap();
             CreateMap<OEvento, DTOEventoC>().ReverseMap();
+            CreateMap<OEvento, DTOEventoS>().ReverseMap();
             
         }
 /////////////////////////////////////////

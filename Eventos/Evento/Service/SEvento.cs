@@ -17,6 +17,7 @@ namespace Eventos.Evento.Service
             _evento = evento;
             _mapper = mapper;
         }
+
         #region GET
         public async Task<ActionResult<List<DTOEvento>>> GetAll()
         {
@@ -25,9 +26,12 @@ namespace Eventos.Evento.Service
             return result;
         }
 
-        public async Task<ActionResult<List<DTOEvento>>> GETDates(int pID, DateTime pDateS, DateTime pDateF)
+        public async Task<ActionResult<List<DTOEvento>>> GETDates(int pID, DateTime pDateS)
         {
-            var eventos = await _evento.GetDates(pID, pDateS, pDateF);
+            if (pDateS.ToString() == null ) { pDateS = DateTime.Now; }
+            var DateF = pDateS.AddDays(-10);
+            
+            var eventos = await _evento.GetDates(pID, pDateS, DateF);
             var result  = _mapper.Map<List<DTOEvento>>(eventos);
             return result;
         }
