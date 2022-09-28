@@ -16,7 +16,7 @@ namespace EvaluacionA.EvaluacionStrategy.Strategy
             {
                 if (even.FechaAlta.Date == eventoval){
                     totalasistencias++;
-                    eventoval = eventoval.AddDays(-1);
+                    eventoval = eventoval.AddDays(+1);
                 }
             }
         

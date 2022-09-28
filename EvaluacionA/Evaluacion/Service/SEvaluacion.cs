@@ -68,20 +68,18 @@ namespace EvaluacionA.Evaluacion.Service
             switch (rs){
                 case 1:
                     contex.SetStrategy(new STEvaluacionRS1());
-                    result = contex.Ejecta(rs,DatesList);
-                    return result;
-
+                    break;
                 case 2:
                     contex.SetStrategy(new STEvaluacionRS2());
-                    result = contex.Ejecta(rs, DatesList);
-                    return result;
-                
+                    break;
                 case 3:
                     contex.SetStrategy(new STEvaluacionRS3());
-                    result = contex.Ejecta(rs, DatesList);
-                    return result;
+                    break;
             }
-            
+
+            result = contex.Ejecta(rs, DatesList);
+            return result;
+
             throw new NotImplementedException();
         }
     }
